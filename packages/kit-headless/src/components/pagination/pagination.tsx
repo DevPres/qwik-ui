@@ -83,14 +83,11 @@ export const getPaginationButtons = (
     hidePrevButton,
     hideNextButton,
     showFirstButton,
-    showLastButton,
+    showLastButton
   }: PaginationOptions
 ): PaginationButtonValue[] => {
   const startPages = range(1, Math.min(boundaryCount, count));
-  const endPages = range(
-    Math.max(count - boundaryCount + 1, boundaryCount + 1),
-    count
-  );
+  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
 
   const siblingsStart = Math.max(
     Math.min(
@@ -129,7 +126,7 @@ export const getPaginationButtons = (
 
     ...endPages,
     ...(hideNextButton ? [] : ['next']),
-    ...(showLastButton ? ['last'] : []),
+    ...(showLastButton ? ['last'] : [])
   ];
 
   return items;
@@ -138,15 +135,17 @@ export const getPaginationButtons = (
 export const PaginationButton = component$(
   ({
     'aria-label': ariaLabel,
+    'aria-current': ariaCurrent,
     disabled,
     onClick$,
     key,
-    value,
+    value
   }: PaginationButtonProps) => {
     return (
       <HeadlessButton
         onClick$={onClick$}
         aria-label={ariaLabel}
+        aria-current={ariaCurrent}
         disabled={disabled}
         key={key}
       >
@@ -223,10 +222,8 @@ export const Pagination = component$(
                   labels={labels}
                   onClick$={() => itemClickHandler(item)}
                   disabled={
-                    (['prev', 'first'].includes(item.toString()) &&
-                      page === 1) ||
-                    (['next', 'last'].includes(item.toString()) &&
-                      page === pages)
+                    (['prev', 'first'].includes(item.toString()) && page === 1) ||
+                    (['next', 'last'].includes(item.toString()) && page === pages)
                   }
                   aria-label={`Page ${item}`}
                   aria-current={item === page}
